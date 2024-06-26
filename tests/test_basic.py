@@ -7,8 +7,16 @@ def test_basic():
 
 def test_nnsplit():
     splitter = nnsplit_unblocked.NNSplit()
-    output = splitter.split(["This is a test. This is another test."])
-    assert output == [["This is a test. ", "This is another test."]]
+    output = splitter.split(
+        [
+            "This is a test. This is another test.",
+            "Another paragraph. Will this split Dr. Smith?",
+        ]
+    )
+    assert output == [
+            ["This is a test. ", "This is another test."],
+            ["Another paragraph. ", "Will this split Dr. Smith?"],
+    ]
 
 
 def test_same_api():

@@ -24,7 +24,11 @@ impl NNSplit {
     fn split(&self, texts: Vec<String>) -> Vec<Vec<String>> {
         let mut result = Vec::new();
         let parts = self.splitter.split(
-            texts.iter().map(|x| x.as_str()).collect::<Vec<&str>>().as_slice()
+            texts
+                .iter()
+                .map(|x| x.as_str())
+                .collect::<Vec<&str>>()
+                .as_slice(),
         );
         for splits in parts.iter() {
             let mut sentences = Vec::new();
@@ -36,7 +40,6 @@ impl NNSplit {
         result
     }
 }
-
 
 #[pymodule]
 fn nnsplit_unblocked(m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -56,9 +59,12 @@ mod tests {
         ];
         let splitter = NNSplit::new().unwrap();
         let result = splitter.split(texts);
-        assert_eq!(result, vec![
-            vec!["Hello, world! ".to_string(), "How are you?".to_string()],
-            vec!["I am fine, thank you.".to_string()],
-        ]);
+        assert_eq!(
+            result,
+            vec![
+                vec!["Hello, world! ".to_string(), "How are you?".to_string()],
+                vec!["I am fine, thank you.".to_string()],
+            ]
+        );
     }
 }
